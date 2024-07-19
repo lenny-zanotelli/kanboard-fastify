@@ -2,11 +2,19 @@
   "name": "kanboard-fastify",
   "version": "1.0.0",
   "description": "Discover fastify with kanboard and full javaScript vanilla frontend",
-  "main": "index.js",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
+    "start": "node --env-file=.env app/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "lenny-zanotelli",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/postgres": "^5.2.2",
+    "fastify": "^4.28.1",
+    "fastify-plugin": "^4.5.1",
+    "pg": "^8.12.0"
+  }
 }
