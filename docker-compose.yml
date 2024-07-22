@@ -1,29 +1,21 @@
-  services:
-    backend:
-      build: .
-      network_mode: host
-      ports:
-        - 3000:3000
-      volumes:
-        - ./app/:/src/app/
-      env_file: 
-        - .env
-      depends_on: 
-        - db
-      
-    db:
-      image: postgres
-      restart: always
-      env_file: 
-        - .env
-      volumes:
-        - pgdata:/var/lib/postgresql/data
+    services:
+      postgres:
+        container_name: kanboard-db
+        image: postgres:latest
+        restart: always
+        ports: 
+          - 5432:5432
+        env_file: 
+          - .env
+        volumes:
+          - pgdata:/var/lib/postgresql/data
+          - ./app/plugins/database/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
 
-    adminer:
-      image: adminer
-      restart: always
-      ports:
-        - 8080:8080
+      adminer:
+        image: adminer
+        restart: always
+        ports:
+          - 8080:8080
 
-  volumes:
-    pgdata:
+    volumes:
+      pgdata:
