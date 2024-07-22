@@ -4,7 +4,7 @@
  * @param {Object} options plugin options, refer to  https://fastify.dev/docs/latest/Reference/Plugins/#plugin-options
  */
 
-async function routes (fastify, options) {
+async function testRoute (fastify, options) {
   // Testing route
   fastify.get('/', async (request, reply) => {
     return { hello: 'world'}
@@ -15,21 +15,23 @@ async function routes (fastify, options) {
       try {
           reply.send({ health: 'UP' })
       } catch (err) {
+          reply.log.error('Database connection error:', err.message)
           reply.send(500, { health: 'DOWN', error: err.message })
       }
   });
 
   fastify.get('/user', async (request, reply) => {
+    await fastify.pg.connect(); // Attempt a connection
     try {
-      const { rows } = await fastify.pg.query(
-        `CREATE TABLE users(id serial PRIMARY KEY, username VARCHAR (50) NOT NULL);`
+      const result = await fastify.pg.query(
+        `SELECT * FROM pg_catalog.pg_tables;`
       )
-      release(client)
-      reply.send(rows)
-    } catch (error) {
-      reply.send(500, error)
+      reply.send(200, { result })
+    } catch (err) {
+      reply.log.error('Database connection error:', err.message)
+      reply.send(500, { health: 'DOWN', error: err.message })
     }
   })
 }
 
-export default routes
+export default testRoute
