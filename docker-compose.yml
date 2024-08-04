@@ -1,7 +1,7 @@
     services:
-      postgres:
+      db:
         container_name: kanboard-db
-        image: postgres:latest
+        image: postgres:15
         restart: always
         ports: 
           - 5432:5432
