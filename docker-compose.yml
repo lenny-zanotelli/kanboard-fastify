@@ -9,7 +9,7 @@
           - .env
         volumes:
           - pgdata:/var/lib/postgresql/data
-          - ./app/plugins/database/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+          - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
 
       adminer:
         image: adminer
