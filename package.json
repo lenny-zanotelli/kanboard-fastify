@@ -5,6 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
+
+
     "start": "node --env-file=.env src/server.js",
     "db:start": "docker compose up --build --remove-orphans"
   },
